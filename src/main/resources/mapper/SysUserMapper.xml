@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mt.fpb.mapper.SysUserMapper">
+    <resultMap id="BaseResultMap" type="com.mt.fpb.model.SysUser">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="login_name" property="loginName" jdbcType="VARCHAR"/>
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
+        <result column="user_type" property="userType" jdbcType="INTEGER"/>
+        <result column="user_status" property="userStatus" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="list" parameterType="String" resultType="map">
+        SELECT su.`id`,
+        su.`user_name` userName,
+        su.`password`,
+        su.`login_name` loginName,
+        su.`add_time` `addTime`,
+        su.`user_type` userType,
+        sr.`role_name` roleName,
+        su.`user_status` userStatus FROM sys_user su JOIN role_user ru ON su.`id` = ru.`user_id` JOIN sys_role sr ON
+        sr.`id` = ru.`role_id`
+        <if test="loginName != null and loginName !=''">
+            where login_name LIKE concat('%', #{loginName}, '%')
+        </if>
+    </select>
+    <select id="getUserInfo" parameterType="String" resultType="map">
+    SELECT
+    su.`id`,
+    su.`user_name` userName,
+    sr.`role_name` roleName
+    FROM sys_user su JOIN role_user ru ON su.`id` = ru.`user_id` JOIN sys_role sr ON ru.`role_id` = sr.`id` WHERE su.`id` = #{userId}
+    </select>
+    <select id="getUserMenu" parameterType="String" resultType="map">
+        SELECT
+          sm.`id`,
+          sm.`menu_name` menuName,
+          sm.`pid`,
+          sm.`path`,
+          sm.`icon`,
+          sm.`add_time` `addTime`,
+          sm.`menu_type` menuType,
+          sm.`is_show` isShow,
+          sm.`menu_status` menuStatus,
+          sm.`remark`,
+          sm.`alias`,
+          sm.`rule`,
+          sm.`method`
+         FROM sys_user su JOIN role_user ru ON su.`id` = ru.`user_id` JOIN role_menu rm ON ru.`role_id` = rm.role_id JOIN sys_menu sm ON rm.menu_id = sm.id WHERE su.`id` = #{userId}
+    </select>
+</mapper>

@@ -1,0 +1,26 @@
+server:
+  port: 9000
+  tomcat:
+    max-swallow-size: -1
+
+# 系统相关配置
+system:
+  token:
+    # redis中token的前缀
+    prefix: >
+      token:
+    # redis token过期时间 默认30分钟
+    expire: 1800
+# spring相关配置
+spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+      resolve-lazily: true
+  profiles:
+    active: dev
+

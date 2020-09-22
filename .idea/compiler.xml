@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="choujiang" />
+        <module name="financial" />
+        <module name="fpb" />
+        <module name="mcafg" />
+        <module name="MCAJG" />
+        <module name="mzj" />
+        <module name="mzjchoujiang" />
+        <module name="schoolYiQi" />
+        <module name="sxHome" />
+        <module name="yiqing" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="choujiang" target="1.8" />
+      <module name="MCAJG" target="1.8" />
+      <module name="mzj" target="1.8" />
+      <module name="mzjchoujiang" target="1.8" />
+      <module name="sxHome" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

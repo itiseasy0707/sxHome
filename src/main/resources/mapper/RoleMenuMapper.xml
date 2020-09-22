@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mt.fpb.mapper.RoleMenuMapper">
+    <resultMap id="BaseResultMap" type="com.mt.fpb.model.RoleMenu">
+        <result column="role_id" property="roleId" jdbcType="INTEGER"/>
+        <result column="menu_id" property="menuId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="roleMenuList" resultType="com.mt.fpb.model.SysMenu">
+      SELECT
+         sm.`id`,
+         sm.`menu_name` menuName,
+         sm.`add_time` `addTime`,
+         sm.`menu_type` menuType,
+         sm.`is_show` isShow,
+         sm.`menu_status` menuStatus,
+         rm.`role_id`roleId ,
+         `remark`,
+          `alias`,
+          `rule`,
+          `method`,
+          `pid`,
+          `path`,
+          `icon`
+         FROM role_menu rm JOIN sys_menu sm ON rm.`menu_id` = sm.`id`
+  </select>
+</mapper>
