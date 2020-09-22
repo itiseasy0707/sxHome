@@ -61,7 +61,7 @@ public class SysUserController {
 
 
     /**
-     * 获取角色信息及权限
+     * 获取角色信息及权限(简单修改  返回一个userId给前端)
      *
      * @param request
      * @return
@@ -79,6 +79,7 @@ public class SysUserController {
             JSONObject json = new JSONObject();
             json.put("user", user);
             json.put("menu", menu);
+            json.put("userId",userId); // userId放入返回给前端
             return CommonResult.success(json);
 
         }
