@@ -10,11 +10,11 @@ import java.io.Serializable;
  * 老人表(Oldman)实体类
  *
  * @author makejava
- * @since 2020-09-22 10:59:10
+ * @since 2020-09-22 15:23:58
  */
 @Table(name = "`oldman`")
 public class Oldman implements Serializable {
-    private static final long serialVersionUID = 399218296605847047L;
+    private static final long serialVersionUID = -68595711992489679L;
 
     /**
      * 主键自增id
@@ -37,16 +37,22 @@ public class Oldman implements Serializable {
     private Integer olAge;
 
     /**
-     * 家属姓名
+     * 紧急联系人姓名
      */
-    @Column(name = "`ol_relation_name`")
-    private String olRelationName;
+    @Column(name = "`ol_emergency_name`")
+    private String olEmergencyName;
 
     /**
-     * 家属电话号码
+     * 紧急联系人电话号码
      */
-    @Column(name = "`ol_relation_tel`")
-    private String olRelationTel;
+    @Column(name = "`ol_emergency_tel`")
+    private String olEmergencyTel;
+
+    /**
+     * 紧急联系人身份证号
+     */
+    @Column(name = "`ol_emergency_idcard`")
+    private String olEmergencyIdcard;
 
     /**
      * 用户id(未确认字段)
@@ -79,20 +85,28 @@ public class Oldman implements Serializable {
         this.olAge = olAge;
     }
 
-    public String getOlRelationName() {
-        return olRelationName;
+    public String getOlEmergencyName() {
+        return olEmergencyName;
     }
 
-    public void setOlRelationName(String olRelationName) {
-        this.olRelationName = olRelationName;
+    public void setOlEmergencyName(String olEmergencyName) {
+        this.olEmergencyName = olEmergencyName;
     }
 
-    public String getOlRelationTel() {
-        return olRelationTel;
+    public String getOlEmergencyTel() {
+        return olEmergencyTel;
     }
 
-    public void setOlRelationTel(String olRelationTel) {
-        this.olRelationTel = olRelationTel;
+    public void setOlEmergencyTel(String olEmergencyTel) {
+        this.olEmergencyTel = olEmergencyTel;
+    }
+
+    public String getOlEmergencyIdcard() {
+        return olEmergencyIdcard;
+    }
+
+    public void setOlEmergencyIdcard(String olEmergencyIdcard) {
+        this.olEmergencyIdcard = olEmergencyIdcard;
     }
 
     public Integer getUserId() {

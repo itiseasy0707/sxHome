@@ -2,6 +2,7 @@ package com.mt.fpb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import tk.mybatis.spring.annotation.MapperScan;
 
 /**
@@ -10,6 +11,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  */
 @SpringBootApplication
 @MapperScan("com.mt.fpb.mapper")
+
 public class SxHomeApplication {
     public static void main(String[] args) {
         SpringApplication.run(SxHomeApplication.class, args);
