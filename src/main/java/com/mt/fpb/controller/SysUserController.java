@@ -7,12 +7,15 @@ import com.github.pagehelper.PageHelper;
 import com.mt.fpb.common.util.GetToken;
 import com.mt.fpb.common.util.RedisUtil;
 import com.mt.fpb.mapper.RoleUserMapper;
+import com.mt.fpb.mapper.SxHomeMapper;
 import com.mt.fpb.mapper.SysUserMapper;
 import com.mt.fpb.model.RoleUser;
+import com.mt.fpb.model.SxHome;
 import com.mt.fpb.model.SysUser;
 import com.mt.fpb.model.dto.BaseQueryParams;
 import com.mt.fpb.model.vo.CommonPage;
 import com.mt.fpb.model.vo.CommonResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
@@ -33,6 +36,9 @@ public class SysUserController {
     private RedisUtil redis;
     @Resource
     private RoleUserMapper roleUserMapper;
+
+    @Autowired
+    private SxHomeMapper sxHomeMapper;
 
     /**
      * 登录
@@ -123,6 +129,11 @@ public class SysUserController {
         roleUser.setUserId(sysUser.getId());
         roleUser.setRoleId(sysUser.getRoleId());
         roleUserMapper.insert(roleUser);
+        // 新增功能 实现账号分配  待优化  ！！！
+        Integer userId02 = sysUser.getId();
+        SxHome sxHome = new SxHome();
+        sxHome.setUserId(userId02);
+        sxHomeMapper.insert(sxHome);
         return CommonResult.success(1);
     }
 

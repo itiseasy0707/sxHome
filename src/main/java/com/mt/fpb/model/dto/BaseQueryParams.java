@@ -30,6 +30,16 @@ public class BaseQueryParams {
 
     private String shopName;
 
+    private Integer userId;// 用户id
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     public String getAreaName() {
         return areaName;
     }
