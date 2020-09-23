@@ -66,7 +66,7 @@ public class UserController {
                 // 添加微信昵称
                 model.setWxName(wxName);
                 model.setAddTime(new Date());
-//                model.setOpenId(openId);
+                model.setOpenId(openId);
                 model.setId(id);
                 userMapper.insert(model);
                 redis.set(token.toString(), openId);
