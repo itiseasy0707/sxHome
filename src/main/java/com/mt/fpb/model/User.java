@@ -60,6 +60,17 @@ public class User {
      */
     private String status;
 
+    @Column(name = "open_id")
+    private String openId;
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
     /**
      * 微信头像元数据
      */
