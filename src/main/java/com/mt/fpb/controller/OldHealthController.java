@@ -125,11 +125,11 @@ public class OldHealthController {
     @PostMapping("/import")
     public CommonResult importExcel(MultipartFile file, String userId) throws Exception {
 
-        if(StringUtils.isEmpty(userId)){
-            return CommonResult.fail(-1,"userId不能为空");
+        if (StringUtils.isEmpty(userId)) {
+            return CommonResult.fail(-1, "userId不能为空");
         }
-        if(StringUtils.isEmpty(file)){
-            return CommonResult.fail(-1,"excel文件不能为空");
+        if (StringUtils.isEmpty(file)) {
+            return CommonResult.fail(-1, "excel文件不能为空");
         }
         ExcelReader reader = ExcelUtil.getReader(file.getInputStream());
         if (reader.readAll().size() > 0) { // excel中存在数据
@@ -137,8 +137,8 @@ public class OldHealthController {
 
             for (int i = 0; i < read.size(); i++) {
                 // 1、身份证号  必填项
-                if(StringUtils.isEmpty(read.get(i).get("身份证号"))){
-                    return CommonResult.fail(-1,"第"+ i+"行，身份证号不能为空");
+                if (StringUtils.isEmpty(read.get(i).get("身份证号"))) {
+                    return CommonResult.fail(-1, "第" + i + "行，身份证号不能为空");
                 }
                 String idCard = read.get(i).get("身份证号").toString();
 
@@ -263,24 +263,10 @@ public class OldHealthController {
 //            }
 //            return ResultUtil.success();
 //
-//        }
-        return CommonResult.fail(-1,"excle表格不为空!");
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            }
+        }
+                return CommonResult.fail(-1, "excle表格不为空!");
+            }
 
 
 
