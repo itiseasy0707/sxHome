@@ -1,7 +1,8 @@
 package com.mt.fpb.controller;
 
+
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
-import com.mt.fpb.common.util.HintUtil;
 import com.mt.fpb.mapper.OldmanMapper;
 import com.mt.fpb.mapper.SxHomeMapper;
 import com.mt.fpb.model.Oldman;
@@ -17,94 +18,92 @@ import tk.mybatis.mapper.entity.Example;
 import java.util.List;
 
 /**
- * 老人表(Oldman)表控制层
+ * 水西颐养之家(SxHome)表控制层
  *
  * @author makejava
- * @since 2020-09-22 10:59:08
+ * @since 2020-09-23 14:07:50
  */
 @RestController
-@RequestMapping("/sxHome")
+@RequestMapping("/sxHomeController")
 public class SxHomeController {
-
+    /**
+     * 服务对象
+     */
     @Autowired
     private SxHomeMapper sxHomeMapper;
 
+    @Autowired
+    private OldmanMapper oldmanMapper;
+
     /**
-     * 颐养之家列表
-     *
-     * @param queryParams 分页参数
+     * 查询所有 水西颐养之家
+     * @param queryParams
      * @return
      */
     @GetMapping("/list")
-    public CommonResult list(BaseQueryParams queryParams) {
-
-        PageHelper.startPage(queryParams.getPage(), queryParams.getPageSize());
-
-        Example example = new Example(SxHome.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("userId", queryParams.getUserId()); // 根据userId显示对应的信息
-        List<SxHome> list = sxHomeMapper.selectByExample(example);
+    public CommonResult list(BaseQueryParams queryParams){
+        PageHelper.startPage(queryParams.getPage(),queryParams.getPageSize());
+        List<SxHome> list = sxHomeMapper.selectAll();
         return CommonResult.success(CommonPage.restPage(list));
     }
 
     /**
-     * 详情
-     *
-     * @param sxHome
+     * 根据主键id查询水西颐养之家
+     * @param sxHome 主键实体
      * @return
      */
     @GetMapping("/getById")
-    public CommonResult getById(SxHome sxHome) {
+    public CommonResult getById(SxHome sxHome){
         if (StringUtils.isEmpty(sxHome.getId())) {
             return CommonResult.fail(-1, "id不能为空");
         }
-        SxHome sxHome1 = sxHomeMapper.selectOne(sxHome);
-        return CommonResult.success(sxHome1);
+        SxHome bt = sxHomeMapper.selectOne(sxHome);
+        //根据userId查询老人信息
+        Example example = new Example(Oldman.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("userId", bt.getUserId());
+        List<Oldman> list = oldmanMapper.selectByExample(example);
+        JSONObject json = new JSONObject();
+        json.put("sxHome", bt);//单个颐养之家信息
+        json.put("list", list);//颐养之家下老人信息
+        return CommonResult.success(json);
     }
 
     /**
-     * 修改老人信息
-     *
-     * @param sxHome
-     * @return
+     * 修改水西颐养之家信息
+     * @param sxHome 颐养之家对象
+     * @return 修改结果
      */
     @PostMapping("/update")
-    public CommonResult update(@RequestBody SxHome sxHome) {
+    public CommonResult update(@RequestBody SxHome sxHome){
         if (StringUtils.isEmpty(sxHome.getId())) {
             return CommonResult.fail(-1, "id不能为空");
         }
         Example example = new Example(SxHome.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("id", sxHome.getId());
-        int cnt = sxHomeMapper.updateByExampleSelective(sxHome, example);
-        return HintUtil.update(cnt);
+        sxHomeMapper.updateByExample(sxHome, example);
+        return CommonResult.success(1);
     }
 
     /**
-     * 添加颐养之家信息
-     *
-     * @param sxHome
-     * @return
+     * 新增颐养之家信息
+     * @param sxHome 颐养之家对象
+     * @return 添加结果
      */
     @PostMapping("/add")
-    public CommonResult add(@RequestBody SxHome sxHome) {
-        int cnt = sxHomeMapper.insert(sxHome);
-        return HintUtil.insert(cnt);
+    public CommonResult add(@RequestBody SxHome sxHome){
+        sxHomeMapper.insert(sxHome);
+        return CommonResult.success(1);
     }
 
-    /**
-     * 删除颐养之家信息
-     *
-     * @param sxHome
-     * @return
-     */
-    @DeleteMapping("/delete")
-    public CommonResult delete(SxHome sxHome) {
-        if (StringUtils.isEmpty(sxHome.getId())) {
+    @DeleteMapping("/delete/{id}")
+    public CommonResult delete(@PathVariable("id") String id) {
+        if (StringUtils.isEmpty(id)) {
             return CommonResult.fail(-1, "id不能为空");
         }
-        int cnt = sxHomeMapper.delete(sxHome);
-        return HintUtil.delete(cnt);
+        sxHomeMapper.deleteByPrimaryKey(id);
+        return CommonResult.success(1);
     }
 
 }
